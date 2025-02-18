@@ -1,10 +1,12 @@
 <?php 
+    require_once "Pessoa.php";
+
     class Livro{
         private String $nome;
         private String $autor;
         private int $numPaginas;
         private bool $disponibilidade;
-        
+        private Pessoa $credor;
 
         public function __construct($nome, $autor, $numPaginas)
         {   
@@ -12,6 +14,20 @@
             $this->autor = $autor;
             $this->numPaginas = $numPaginas;
             $this->disponibilidade = true;
+        }
+
+        public function emprestar($pessoa){
+            if($this->disponibilidade == true){
+                $this->disponibilidade = false;
+                $this->credor = $pessoa;
+            } else{
+                echo "Livro já emprestado! Não disponivel\n";
+            }
+        }
+
+        public function devolver(){
+            $this->disponibilidade = true;
+            $this->removeCredor();
         }
 
         public function getNome(){
@@ -44,6 +60,18 @@
 
         public function setDisponibilidade($disponibilidade){
             $this->disponibilidade = $disponibilidade;
+        }
+
+        public function getCredor(){
+            return $this->credor->getNome();
+        }
+
+        public function setCredor($credor){
+            $this->credor = $credor;
+        }
+
+        public function removeCredor(){
+            unset($this->credor);
         }
 
     }
